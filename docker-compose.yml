@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+    nginx:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        container_name: nginx
+        volumes:
+            - ./:/var/www
+        environment:
+            - "DB_PORT=5432"
+            - "DB_HOST=pgsql"
+            - "XDG_CONFIG_HOME=/app"
+        ports:
+            - "80:80"
+        networks:
+            - latech
+        depends_on:
+            - laravel
+
+    laravel:
+        build:
+            context: ./docker/php-fpm
+            dockerfile: Dockerfile
+        container_name: laravel
+        volumes:
+            - ./:/var/www
+        environment:
+            - "COMPOSER_MEMORY_LIMIT=-1"
+        networks:
+            - latech
+        depends_on:
+            - db
+
+    db:
+        image: postgres:latest
+        container_name: postgres
+        restart: always
+        environment:
+            POSTGRES_DB: latech
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - latech
+
+networks:
+    latech:
+
+volumes:
+    postgres_data:
