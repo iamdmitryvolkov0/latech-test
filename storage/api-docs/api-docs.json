@@ -1,0 +1,169 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LamodaTech Test Task",
+        "description": "API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/reserve_product": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Reserves product by unique codes array",
+                "operationId": "706b9f0f398c6c264a2380095586973a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "codes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "Integer"
+                                        }
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "codes": "[123456, 654321]"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Products reserved successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/cancel_reservation": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Cancel product reservation by unique codes array",
+                "operationId": "dd4be378dba09c06af3baea8ff9a6720",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "codes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "Integer"
+                                        }
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "codes": "[123456, 654321]"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Reservation cancelled successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/stock_remainders": {
+            "post": {
+                "tags": [
+                    "Stock"
+                ],
+                "summary": "Get stock remainders by stock id",
+                "operationId": "7c10e2d010fbbf711f9cb9cd1707dd48",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "stock_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "stock_id": "1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Shirt"
+                                                },
+                                                "size": {
+                                                    "type": "string",
+                                                    "example": "54"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "stock_id": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
