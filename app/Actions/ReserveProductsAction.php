@@ -5,12 +5,13 @@ namespace App\Actions;
 use App\Models\Product;
 use App\Models\ProductReservation;
 use App\Models\Stock;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ReserveProductsAction
 {
-    public function execute(array $fields)
+    public function execute(array $fields): JsonResponse
     {
         $validator = Validator::make($fields, [
             'codes' => ['required', 'array'],
