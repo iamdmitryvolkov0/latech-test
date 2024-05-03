@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+//todo: add swagger documentation
+use App\Actions\CancelProductReservationAction;
+use App\Actions\ReserveProductsAction;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function reserveProduct(Request $request, ReserveProductsAction $action): JsonResponse
     {
-        return response()->json(['data' => 123]);
+        //сделал не через FormRequest из-за проблем с Laravel Sanctum
+        return $action->execute($request->only('codes'));
+    }
+
+    public function cancelReservation(Request $request, CancelProductReservationAction $action): JsonResponse
+    {
+        //сделал не через FormRequest из-за проблем с Laravel Sanctum
+        return $action->execute($request->only('codes'));
     }
 }

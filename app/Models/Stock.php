@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\StockFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Stock whereIsAvailable($value)
  * @method static Builder|Stock whereName($value)
  * @method static Builder|Stock whereUpdatedAt($value)
+ * @method static StockFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Stock extends Model

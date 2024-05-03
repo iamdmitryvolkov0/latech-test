@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Product whereSize($value)
  * @method static Builder|Product whereStockId($value)
  * @method static Builder|Product whereUpdatedAt($value)
+ * @method static ProductFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Product extends Model
