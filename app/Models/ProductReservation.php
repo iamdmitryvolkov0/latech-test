@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * Модель Резевр продукта
+ * Модель Резерв продукта
  *
  * @property int $id
  * @property int $product_id
