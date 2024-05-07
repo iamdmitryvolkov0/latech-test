@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\CancelProductReservationAction;
 use App\Actions\ReserveProductsAction;
+use App\Http\Requests\ReserveProductsRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * @OA\Info(
@@ -67,15 +67,13 @@ use Illuminate\Http\Request;
  */
 class ProductController extends Controller
 {
-    public function reserveProduct(Request $request, ReserveProductsAction $action): JsonResponse
+    public function reserveProduct(ReserveProductsRequest $request, ReserveProductsAction $action): JsonResponse
     {
-        //сделал не через FormRequest из-за проблем с Laravel Sanctum
-        return $action->execute($request->only('codes'));
+        return response()->json($action->execute($request->validated()));
     }
 
-    public function cancelReservation(Request $request, CancelProductReservationAction $action): JsonResponse
+    public function cancelReservation(ReserveProductsRequest $request, CancelProductReservationAction $action): JsonResponse
     {
-        //сделал не через FormRequest из-за проблем с Laravel Sanctum
-        return $action->execute($request->only('codes'));
+        return response()->json($action->execute($request->validated()));
     }
 }

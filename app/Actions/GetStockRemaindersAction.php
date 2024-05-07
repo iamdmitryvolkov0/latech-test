@@ -2,26 +2,14 @@
 
 namespace App\Actions;
 
-use App\Models\Product;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
+use App\Repositories\ProductRepository;
 
 class GetStockRemaindersAction
 {
-    public function execute(array $fields): JsonResponse
+    public function execute(array $fields): array
     {
-        $validator = Validator::make($fields, [
-            'stock_id' => ['required', 'integer'],
-        ]);
+        $productRepository = new ProductRepository();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $data = Product::query()
-            ->where('stock_id', $fields['stock_id'])
-            ->get();
-
-        return response()->json(['data' => $data]);
+        return ['data' => $productRepository->getProductsByStockId($fields['stock_id'])];
     }
 }

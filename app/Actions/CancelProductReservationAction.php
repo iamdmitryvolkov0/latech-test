@@ -3,45 +3,42 @@
 namespace App\Actions;
 
 use App\Models\Product;
-use App\Models\ProductReservation;
-use Illuminate\Http\JsonResponse;
+use App\Repositories\ProductRepository;
+use App\Repositories\ProductReservationRepository;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class CancelProductReservationAction
 {
-    public function execute(array $fields): JsonResponse
+    public function execute(array $fields): array
     {
-        $validator = Validator::make($fields, [
-            'codes' => ['required', 'array'],
-        ]);
+        $productRepository = new ProductRepository();
+        $productReservationRepository = new ProductReservationRepository();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-
-        $productsToCancelReservation = Product::query()
-            ->where('code', $fields['codes'])
-            ->get();
+        $productsToCancelReservation = $productRepository->getProductsByCodes($fields['codes']);
 
         /** @var Product $product */
         foreach ($productsToCancelReservation as $product) {
-            DB::transaction(function () use ($product) {
-                $product->quantity += 1;
-                $product->save();
+            try {
+                DB::transaction(function () use ($product, $productReservationRepository) {
+                    $product->quantity += 1;
+                    $product->save();
 
-                $reservation = ProductReservation::query()
-                    ->where('code', $product->code)
-                    ->first();
+                    //todo: вынести запрос из цикла
+                    $reservation = $productReservationRepository->getProductReservationByCode($product->code);
 
-                if ($reservation->quantity == 1) {
-                    $reservation->delete();
-                } else {
-                    $reservation->quantity -= 1;
-                    $reservation->save();
-                }
-            });
+                    if ($reservation->quantity == 1) {
+                        $reservation->delete();
+                    } else {
+                        $reservation->quantity -= 1;
+                        $reservation->save();
+                    }
+                });
+            } catch (Throwable) {
+                DB::rollBack();
+            }
+
         }
-        return response()->json(["message" => "Reservation cancelled successfully"]);
+        return ["message" => "Reservation cancelled successfully"];
     }
 }

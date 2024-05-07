@@ -12,7 +12,7 @@ class ReserveProductsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class ReserveProductsRequest extends FormRequest
     {
         return [
             'product_codes' => ['required', 'array'],
+            'product_codes.*' => ['integer'],
         ];
     }
 }

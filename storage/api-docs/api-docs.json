@@ -101,12 +101,12 @@
             }
         },
         "/stock_remainders": {
-            "post": {
+            "get": {
                 "tags": [
                     "Stock"
                 ],
                 "summary": "Get stock remainders by stock id",
-                "operationId": "7c10e2d010fbbf711f9cb9cd1707dd48",
+                "operationId": "046cdda1d60df45822e666a4a6fbf95e",
                 "requestBody": {
                     "content": {
                         "application/json": {

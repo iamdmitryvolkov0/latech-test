@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\GetStockRemaindersAction;
+use App\Http\Requests\StockDataRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
- * @OA\Post(
+ * @OA\Get(
  *       path="/stock_remainders",
  *       summary="Get stock remainders by stock id",
  *       tags={"Stock"},
@@ -40,9 +40,8 @@ use Illuminate\Http\Request;
  */
 class StockController extends Controller
 {
-    public function getRemaindersByStockId(Request $request, GetStockRemaindersAction $action): JsonResponse
+    public function getRemaindersByStockId(StockDataRequest $request, GetStockRemaindersAction $action): JsonResponse
     {
-        //сделал не через FormRequest из-за проблем с Laravel Sanctum
-        return $action->execute($request->only('stock_id'));
+        return response()->json($action->execute($request->validated()));
     }
 }
